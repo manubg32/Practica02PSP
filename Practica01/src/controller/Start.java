@@ -9,7 +9,7 @@ public class Start {
 		try {
 			FrmPrincipal frame = new FrmPrincipal();
 			frame.setVisible(true);//Cambio
-			//Cambio Antonio
+			//Cambio Manuel
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
