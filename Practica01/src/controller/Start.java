@@ -8,7 +8,7 @@ public class Start {
 		//Creamos una nueva isntancia de la pantalla principal
 		try {
 			FrmPrincipal frame = new FrmPrincipal();
-			frame.setVisible(true);
+			frame.setVisible(true);//Cambio
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
