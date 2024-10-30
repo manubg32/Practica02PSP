@@ -1,5 +1,6 @@
 package controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +17,13 @@ public class GestionEmpleados {
 	
 	public void InicializarLista() {
 		//Creamos la lista con 5 empleados
-		Empleado e1 = new Empleado("Daniel Malagón Periánez", "31/07/1982", 2500.0);
-		Empleado e2 = new Empleado("Manuel Borrero Guerrero", "26/09/2002", 1200.0);
-		Empleado e3 = new Empleado("Cristina Sanchez Moreno", "24/05/2000", 1800.0);
-		Empleado e4 = new Empleado("Antonio Guerrero Pulgada", "21/08/2001", 1600.0);
-		Empleado e5 = new Empleado("Sebastian Exposito Ruiz", "15/11/2003", 800.0);
+
+		//Borrar y crear un showMessageDialog avisando de que no hay empleados  (Primera idea)
+		Empleado e1 = new Empleado("Daniel Malagón Periánez", LocalDate.of(1999, 10, 1), 2500.0);
+		Empleado e2 = new Empleado("Manuel Borrero Guerrero", LocalDate.of(2002,9,26), 1200.0);
+		Empleado e3 = new Empleado("Cristina Sanchez Moreno", LocalDate.of(2000,5,24), 1800.0);
+		Empleado e4 = new Empleado("Antonio Guerrero Pulgada", LocalDate.of(2001,8,21), 1600.0);
+		Empleado e5 = new Empleado("Sebastian Exposito Ruiz", LocalDate.of(2003,11,15), 800.0);
 		
 		empleados.add(e1);
 		empleados.add(e2);
