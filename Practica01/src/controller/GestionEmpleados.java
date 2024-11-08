@@ -1,11 +1,13 @@
 package controller;
 
+import java.awt.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import model.Empleado;
 
@@ -43,7 +45,7 @@ public class GestionEmpleados {
 		 if (pos < empleados.size()) {
 			 Empleado siguiente = empleados.get(pos);
 			    txtNombre.setText(siguiente.getNombre());
-			    txtFechaNacimiento.setText(siguiente.getFechaNacimiento());
+			    txtFechaNacimiento.setText(siguiente.getFechaNacimiento().toString());
 			    txtSalario.setText(siguiente.getSalario().toString());
 		 }
 		    
@@ -87,7 +89,7 @@ public class GestionEmpleados {
 	public static void mostrarPrimero(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario) {
 		//Este metodo se llama al crear la interfaz por lo que la variable pos es 0 por lo tanto mostramos dicho elemento
 		txtNombre.setText(empleados.get(pos).getNombre());
-		txtFechaNacimiento.setText(empleados.get(pos).getFechaNacimiento());
+		txtFechaNacimiento.setText(empleados.get(pos).getFechaNacimiento().toString());
 		txtSalario.setText(empleados.get(pos).getSalario().toString());
 	}
 
@@ -99,7 +101,7 @@ public class GestionEmpleados {
 
 	    Empleado anterior = empleados.get(pos);
 	    txtNombre.setText(anterior.getNombre());
-	    txtFechaNacimiento.setText(anterior.getFechaNacimiento());
+	    txtFechaNacimiento.setText(anterior.getFechaNacimiento().toString());
 	    txtSalario.setText(anterior.getSalario().toString());
 		
 	}
@@ -107,12 +109,43 @@ public class GestionEmpleados {
 	public void guardar(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario) {
 		//Si los campos no estan vacios creamos un nuevo elemento y lo agreagamos a la lista, la posicion pasa a ser la justo anterior y mostramos el siguiente (el recien creado)
 		if (!txtNombre.getText().isEmpty() && !txtFechaNacimiento.getText().isEmpty() && !txtSalario.getText().isEmpty()) {
-			empleados.add(new Empleado(txtNombre.getText(), txtFechaNacimiento.getText(), Double.parseDouble(txtSalario.getText())));
-			pos = empleados.size()-2;
-			mostrarSiguiente(txtNombre, txtFechaNacimiento, txtSalario);
+			//Creamos un formatter para la fecha de nacimiento.
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			//Usamos un bloque try-catch por si acaso el parse del JTextField da error.
+			try{
+				//Hacemos el parseo a LocalDate pasandole el JTextField y el DateFormatter
+				LocalDate localDate = LocalDate.parse(txtFechaNacimiento.getText(), dateFormatter);
+				//Pruebas
+				if(localDate.getYear()>=1900 && localDate.getYear()<=2015){
+					txtFechaNacimiento.setForeground(Color.black);
+					if(esDouble(txtSalario.getText())){
+						Double salario = Double.parseDouble(txtSalario.getText());
+						Double sueldoMax =50000d;
+						if(salario<sueldoMax){
+							empleados.add(new Empleado(txtNombre.getText(), localDate, salario));
+							pos = empleados.size()-2;
+							mostrarSiguiente(txtNombre, txtFechaNacimiento, txtSalario);
+						} else {
+							txtSalario.setForeground(Color.red);
+							//Pensando si poner un message dialog o no
+						}
+					}
+				} else {
+					//Quiero hacer que el JTextField se ponga en rojo para que no deje guardar
+					txtFechaNacimiento.setForeground(Color.red);
+					JOptionPane.showMessageDialog(null, "Fecha Invalida", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}catch(DateTimeParseException e){
+				System.out.println("Error: Fecha no válida");
+			}catch(Exception e){
+				System.out.println("Error: Excepcion encontrada"+e.getMessage());
+			}
+
 		}
-		
+
 	}
+
+
 
 	public void cancelar(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario) {
 		//Si se pulsa cancelar se borran todos los campos
@@ -122,6 +155,15 @@ public class GestionEmpleados {
 		
 	}
 
-	
+	//PRUEBAS
+
+	public boolean esDouble(String valor){
+		try{
+			Double.parseDouble(valor);
+			return true;
+		} catch(NumberFormatException e){
+			return false;
+		}
+	}
 	
 }

@@ -1,10 +1,10 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -143,7 +143,27 @@ public class FrmPrincipal extends JFrame {
 				ge.cancelar(txtNombre, txtFechaNacimiento, txtSalario);				
 			}
 		});
-		
+
+
+		//Pruebas detectar cuando borro texto
+		txtFechaNacimiento.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(txtFechaNacimiento.getText().isEmpty()){
+					txtFechaNacimiento.setForeground(Color.black);
+				}
+			}
+		});
+
+		txtSalario.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(txtSalario.getText().isEmpty()){
+					txtSalario.setForeground(Color.black);
+				}
+			}
+		});
+
 	}
 
 }
