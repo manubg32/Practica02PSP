@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,6 +18,16 @@ public class FrmMenuPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
+	private JMenuBar menuBar;
+	private JMenu mnuPaneles;
+	private JMenuItem mniMenu;
+	private JMenuItem mniVer;
+	private JMenuItem mniAltas;
+	private JSeparator separator;
+	private JMenuItem mniAcercaDe;
+	private JPanel pnlVistas;
+	private JPanel pnlAltas;
+	private JPanel pnlAcercaDe;
 	/**
 	 * Launch the application.
 	 */
@@ -42,35 +54,58 @@ public class FrmMenuPrincipal extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnuPaneles = new JMenu("Paneles");
+		mnuPaneles = new JMenu("Paneles");
 		menuBar.add(mnuPaneles);
 		
-		JMenuItem mniMenu = new JMenuItem("Menú Principal");
+		mniMenu = new JMenuItem("Menú Principal");
 		mniMenu.setHorizontalAlignment(SwingConstants.CENTER);
 		mnuPaneles.add(mniMenu);
 		
-		JMenuItem mniVer = new JMenuItem("Ver");
+		mniVer = new JMenuItem("Ver");
 		mniVer.setHorizontalTextPosition(SwingConstants.CENTER);
 		mniVer.setHorizontalAlignment(SwingConstants.CENTER);
 		mnuPaneles.add(mniVer);
 		
-		JMenuItem mniAltas = new JMenuItem("Altas");
+		mniAltas = new JMenuItem("Altas");
 		mniAltas.setHorizontalAlignment(SwingConstants.CENTER);
 		mnuPaneles.add(mniAltas);
 		
-		JSeparator separator = new JSeparator();
+		separator = new JSeparator();
 		mnuPaneles.add(separator);
 		
-		JMenuItem mniAcercaDe = new JMenuItem("Acerca de");
+		mniAcercaDe = new JMenuItem("Acerca de");
 		mniAcercaDe.setHorizontalAlignment(SwingConstants.CENTER);
 		mnuPaneles.add(mniAcercaDe);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
+		pnlVistas = new PnlVistas();
+		pnlAltas = new PnlAltas();
+
+		addListeners();
 		setContentPane(contentPane);
 	}
+	private void addListeners() {
 
+
+		mniVer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(pnlVistas);
+				revalidate();
+				repaint();
+			}
+		});
+		mniAltas.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(pnlAltas);
+				revalidate();
+				repaint();
+			}
+		});
+	}
 }

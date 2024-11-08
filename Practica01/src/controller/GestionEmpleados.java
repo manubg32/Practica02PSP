@@ -1,11 +1,12 @@
 package controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
+import java.awt.Color;
+import javax.swing.*;
 
 import model.Empleado;
 
@@ -33,7 +34,7 @@ public class GestionEmpleados {
 		
 	}
 
-	public void mostrarSiguiente(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario, JTextField txtOficio) {
+	public void mostrarSiguiente(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario,JTextField txtOficio) {
 		//Mientras que la posicion sea inferior al tamaño de la lista, la incrementamos
 		if (pos < empleados.size()) {
 		        pos++;
@@ -75,6 +76,7 @@ public class GestionEmpleados {
 		
 	}
 
+
 	public void mostrarPrimero(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario, JTextField txtOficio) {
 		//Este metodo se llama al crear la interfaz por lo que la variable pos se pone a 0, mostramos dicho elemento
 		pos = 0;
@@ -108,22 +110,62 @@ public class GestionEmpleados {
 		txtOficio.setText(empleados.get(pos).getOficio());
 	}
 
-	public void guardar(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario) {
+	public void guardar(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario,JTextField txtSueldoMaximo ,JTextField txtOficio) {
 		//Si los campos no estan vacios creamos un nuevo elemento y lo agreagamos a la lista, la posicion pasa a ser la justo anterior y mostramos el siguiente (el recien creado)
 		if (!txtNombre.getText().isEmpty() && !txtFechaNacimiento.getText().isEmpty() && !txtSalario.getText().isEmpty()) {
-			empleados.add(new Empleado(txtNombre.getText(), txtFechaNacimiento.getText(), Double.parseDouble(txtSalario.getText())));
-			pos = empleados.size()-2;
-			mostrarSiguiente(txtNombre, txtFechaNacimiento, txtSalario);
+			//Creamos un formatter para la fecha de nacimiento.
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			//Usamos un bloque try-catch por si acaso el parse del JTextField da error.
+			try{
+				//Hacemos el parseo a LocalDate pasandole el JTextField y el DateFormatter
+				LocalDate localDate = LocalDate.parse(txtFechaNacimiento.getText(), dateFormatter);
+				//Pruebas
+				if(localDate.getYear()>=1900 && localDate.getYear()<=2015){
+					txtFechaNacimiento.setForeground(Color.black);
+					if(esDouble(txtSalario.getText())){
+						Double salario = Double.parseDouble(txtSalario.getText());
+						Double sueldoMax = Double.parseDouble(txtSueldoMaximo.getText());
+						if(salario<sueldoMax){
+							empleados.add(new Empleado(txtNombre.getText(), localDate, salario,sueldoMax ,txtOficio.getText()));
+							pos = empleados.size()-2;
+							mostrarSiguiente(txtNombre, txtFechaNacimiento, txtSalario,txtOficio);
+						} else {
+							txtSalario.setForeground(Color.red);
+							//Pensando si poner un message dialog o no
+						}
+					}
+				} else {
+					//Quiero hacer que el JTextField se ponga en rojo para que no deje guardar
+					txtFechaNacimiento.setForeground(Color.red);
+					JOptionPane.showMessageDialog(null, "Fecha Invalida", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}catch(DateTimeParseException e){
+				System.out.println("Error: Fecha no válida");
+			}catch(Exception e){
+				System.out.println("Error: Excepcion encontrada"+e.getMessage());
+			}
+
 		}
-		
+
 	}
 
-	public void cancelar(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario) {
+
+	public void cancelar(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario,JTextField txtSueldoMaximo, JTextField txtOficio) {
 		//Si se pulsa cancelar se borran todos los campos
 		txtNombre.setText("");
 		txtFechaNacimiento.setText("");
 		txtSalario.setText("");
+		txtSueldoMaximo.setText("");
+		txtOficio.setText("");
 		
 	}
-	
+
+	public boolean esDouble(String valor){
+		try{
+			Double.parseDouble(valor);
+			return true;
+		} catch(NumberFormatException e){
+			return false;
+		}
+	}
 }
