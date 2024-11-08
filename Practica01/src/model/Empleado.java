@@ -5,7 +5,9 @@ import java.util.Date;
 
 public class Empleado {
 
-	private static int idEmpleado;
+	private static int cont;
+	
+	private Integer idEmpleado;
 	private String nombre;
 	private LocalDate fechaNacimiento;
 	private Double salario;
@@ -14,28 +16,34 @@ public class Empleado {
 
 	
 		
-	public Empleado(String nombre, LocalDate fechaNacimiento, Double salario) {
-		//La id empleado la pongo a 1 para que cuando cree el primer objeto le ponga la id 1
-		idEmpleado = 1;
-		this.nombre = nombre;
-		this.fechaNacimiento = fechaNacimiento;
-		this.salario = salario;
-		// Y aqui le sumo a la variable para que la siguiente sea la id 2
-		idEmpleado++;
+	public Empleado(String nombre, LocalDate fechaNacimiento, Double salario, Double sueldoMax, String oficio) {
+		//La id empleado es la variable contador y que incremente en uno al asignarlo
+		idEmpleado = cont++;
+		setNombre(nombre);
+		setFechaNacimiento(fechaNacimiento);
+		setSueldoMax(sueldoMax);
+		setSalario(salario);
+		setOficio(oficio);
+		
 	}
 	
 	
+	public Integer getIdEmpleado() {return idEmpleado;}
 	public String getNombre() {return nombre;}
 	public void setNombre(String nombre) {this.nombre = nombre;}
 	public LocalDate getFechaNacimiento() {return fechaNacimiento;}
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {this.fechaNacimiento = fechaNacimiento;}
 	public Double getSalario() {return salario;}
 	public void setSalario(Double salario) {this.salario = salario;}
+	public Double getSueldoMax() {return sueldoMax;}
+	public void setSueldoMax(Double sm) {this.sueldoMax = sm;}
+	public String getOficio() {return this.oficio;}
+	public void setOficio(String oficio) {this.oficio = oficio;}
 
 
 	@Override
 	public String toString() {
-		return "Empleado [nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + ", salario=" + salario + "]";
+		return "Empleado [id=" + idEmpleado + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + ", salario=" + salario + ", sueldo maximo=" + sueldoMax + ", oficio=" + oficio  + "]";
 	}
 	
 	
