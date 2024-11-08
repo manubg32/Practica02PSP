@@ -1,19 +1,28 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.SwingConstants;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import controller.GestionEmpleados;
 
 public class FrmMenuPrincipal extends JFrame {
+	
+	private static GestionEmpleados ge = new GestionEmpleados();
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -28,6 +37,9 @@ public class FrmMenuPrincipal extends JFrame {
 	private JPanel pnlVistas;
 	private JPanel pnlAltas;
 	private JPanel pnlAcercaDe;
+	
+	private ImageIcon imagen;
+	private JLabel lblImagen;
 	/**
 	 * Launch the application.
 	 */
@@ -35,6 +47,8 @@ public class FrmMenuPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
+					ge.InicializarLista();
 					FrmMenuPrincipal frame = new FrmMenuPrincipal();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -48,11 +62,13 @@ public class FrmMenuPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public FrmMenuPrincipal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FrmMenuPrincipal.class.getResource("/view/icon.png")));
 		setName("FrmMenuPrincipal");
-		setTitle("Menu Gestion");
+		setTitle("Gestión Empleados");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
+		setLocationRelativeTo(null);
 		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -84,9 +100,16 @@ public class FrmMenuPrincipal extends JFrame {
 
 		pnlVistas = new PnlVistas();
 		pnlAltas = new PnlAltas();
-
+		pnlAcercaDe = new PnlAcercaDe();
+		
 		addListeners();
 		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		Image tmp = new ImageIcon("view/icon.png").getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+		imagen = new ImageIcon(tmp);
+		lblImagen = new JLabel(imagen); 
+		contentPane.add(lblImagen, BorderLayout.CENTER);
 	}
 	private void addListeners() {
 
@@ -103,6 +126,22 @@ public class FrmMenuPrincipal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setContentPane(pnlAltas);
+				revalidate();
+				repaint();
+			}
+		});
+		mniAcercaDe.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(pnlAcercaDe);
+				revalidate();
+				repaint();
+			}
+		});
+		mniMenu.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(contentPane);
 				revalidate();
 				repaint();
 			}

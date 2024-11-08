@@ -44,7 +44,6 @@ public class PnlVistas extends JPanel {
 		initComponents();
 		
 		//Inicializamos la lista, mostramos el primero y comprobamos como deben estar los botones
-		ge.InicializarLista();
 		ge.mostrarPrimero(txtNombre, txtFechaNacimiento, txtSalario, txtOficio);
 		ge.comprobarBotonesVista(GestionEmpleados.pos, btnPrimero, btnAnterior, btnSiguiente, btnUltimo);
 				

@@ -37,9 +37,6 @@ public class PnlAltas extends JPanel {
 		setLayout(new GridLayout(6, 2, 5, 5));
 
 		initComponents();
-
-		ge.InicializarLista();
-
 		addListeners();
 	}
 	private void addListeners() {
@@ -68,7 +65,7 @@ public class PnlAltas extends JPanel {
 		add(txtNombre);
 		txtNombre.setColumns(10);
 
-		JLabel lblFechaNacimiento = new JLabel("Fecha Nacimiento:");
+		JLabel lblFechaNacimiento = new JLabel("Fecha Nacimiento (yyyy-MM-dd):");
 		lblFechaNacimiento.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblFechaNacimiento);
 
