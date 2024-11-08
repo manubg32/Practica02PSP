@@ -1,13 +1,11 @@
 package controller;
 
-import java.awt.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JTextField;
 
 import model.Empleado;
 
@@ -21,11 +19,11 @@ public class GestionEmpleados {
 		//Creamos la lista con 5 empleados
 
 		//Borrar y crear un showMessageDialog avisando de que no hay empleados  (Primera idea)
-		Empleado e1 = new Empleado("Daniel Malagón Periánez", LocalDate.of(1999, 10, 1), 2500.0);
-		Empleado e2 = new Empleado("Manuel Borrero Guerrero", LocalDate.of(2002,9,26), 1200.0);
-		Empleado e3 = new Empleado("Cristina Sanchez Moreno", LocalDate.of(2000,5,24), 1800.0);
-		Empleado e4 = new Empleado("Antonio Guerrero Pulgada", LocalDate.of(2001,8,21), 1600.0);
-		Empleado e5 = new Empleado("Sebastian Exposito Ruiz", LocalDate.of(2003,11,15), 800.0);
+		Empleado e1 = new Empleado("Daniel Malagón Periánez", LocalDate.of(1999, 10, 1), 2500.0, 3000.0, "Profesor");
+		Empleado e2 = new Empleado("Manuel Borrero Guerrero", LocalDate.of(2002,9,26), 1200.0, 2500.0, "Alumno");
+		Empleado e3 = new Empleado("Cristina Sanchez Moreno", LocalDate.of(2000,5,24), 1800.0, 2000.0, "Alumno");
+		Empleado e4 = new Empleado("Antonio Guerrero Pulgada", LocalDate.of(2001,8,21), 1600.0, 1800.0, "Conserje");
+		Empleado e5 = new Empleado("Sebastian Exposito Ruiz", LocalDate.of(2003,11,15), 800.0, 1000.0, "Humorista");
 		
 		empleados.add(e1);
 		empleados.add(e2);
@@ -45,7 +43,7 @@ public class GestionEmpleados {
 		 if (pos < empleados.size()) {
 			 Empleado siguiente = empleados.get(pos);
 			    txtNombre.setText(siguiente.getNombre());
-			    txtFechaNacimiento.setText(siguiente.getFechaNacimiento().toString());
+			    txtFechaNacimiento.setText(siguiente.getFechaNacimiento());
 			    txtSalario.setText(siguiente.getSalario().toString());
 		 }
 		    
@@ -89,7 +87,7 @@ public class GestionEmpleados {
 	public static void mostrarPrimero(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario) {
 		//Este metodo se llama al crear la interfaz por lo que la variable pos es 0 por lo tanto mostramos dicho elemento
 		txtNombre.setText(empleados.get(pos).getNombre());
-		txtFechaNacimiento.setText(empleados.get(pos).getFechaNacimiento().toString());
+		txtFechaNacimiento.setText(empleados.get(pos).getFechaNacimiento());
 		txtSalario.setText(empleados.get(pos).getSalario().toString());
 	}
 
@@ -101,7 +99,7 @@ public class GestionEmpleados {
 
 	    Empleado anterior = empleados.get(pos);
 	    txtNombre.setText(anterior.getNombre());
-	    txtFechaNacimiento.setText(anterior.getFechaNacimiento().toString());
+	    txtFechaNacimiento.setText(anterior.getFechaNacimiento());
 	    txtSalario.setText(anterior.getSalario().toString());
 		
 	}
@@ -109,43 +107,12 @@ public class GestionEmpleados {
 	public void guardar(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario) {
 		//Si los campos no estan vacios creamos un nuevo elemento y lo agreagamos a la lista, la posicion pasa a ser la justo anterior y mostramos el siguiente (el recien creado)
 		if (!txtNombre.getText().isEmpty() && !txtFechaNacimiento.getText().isEmpty() && !txtSalario.getText().isEmpty()) {
-			//Creamos un formatter para la fecha de nacimiento.
-			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			//Usamos un bloque try-catch por si acaso el parse del JTextField da error.
-			try{
-				//Hacemos el parseo a LocalDate pasandole el JTextField y el DateFormatter
-				LocalDate localDate = LocalDate.parse(txtFechaNacimiento.getText(), dateFormatter);
-				//Pruebas
-				if(localDate.getYear()>=1900 && localDate.getYear()<=2015){
-					txtFechaNacimiento.setForeground(Color.black);
-					if(esDouble(txtSalario.getText())){
-						Double salario = Double.parseDouble(txtSalario.getText());
-						Double sueldoMax =50000d;
-						if(salario<sueldoMax){
-							empleados.add(new Empleado(txtNombre.getText(), localDate, salario));
-							pos = empleados.size()-2;
-							mostrarSiguiente(txtNombre, txtFechaNacimiento, txtSalario);
-						} else {
-							txtSalario.setForeground(Color.red);
-							//Pensando si poner un message dialog o no
-						}
-					}
-				} else {
-					//Quiero hacer que el JTextField se ponga en rojo para que no deje guardar
-					txtFechaNacimiento.setForeground(Color.red);
-					JOptionPane.showMessageDialog(null, "Fecha Invalida", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}catch(DateTimeParseException e){
-				System.out.println("Error: Fecha no válida");
-			}catch(Exception e){
-				System.out.println("Error: Excepcion encontrada"+e.getMessage());
-			}
-
+			empleados.add(new Empleado(txtNombre.getText(), txtFechaNacimiento.getText(), Double.parseDouble(txtSalario.getText())));
+			pos = empleados.size()-2;
+			mostrarSiguiente(txtNombre, txtFechaNacimiento, txtSalario);
 		}
-
+		
 	}
-
-
 
 	public void cancelar(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario) {
 		//Si se pulsa cancelar se borran todos los campos
@@ -155,15 +122,6 @@ public class GestionEmpleados {
 		
 	}
 
-	//PRUEBAS
-
-	public boolean esDouble(String valor){
-		try{
-			Double.parseDouble(valor);
-			return true;
-		} catch(NumberFormatException e){
-			return false;
-		}
-	}
+	
 	
 }

@@ -2,6 +2,9 @@ package view;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.GestionEmpleados;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -9,12 +12,26 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class PnlVistas extends JPanel {
+	
+	//Creamos una instancia de la clase GestionEmpleados para utilizar sus métodos más adelante
+	private static GestionEmpleados ge = new GestionEmpleados();
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	
+	private static JPanel contentPane;
+	private static JPanel pnlMostrar;
+	
+	
+	private JTextField txtNombre;
+	private JTextField txtFechaNacimiento;
+	private JTextField txtSalario;
 	private JTextField txtOficio;
+	
+	
+	private static JButton btnPrimero;
+	private static JButton btnAnterior;
+	private static JButton btnSiguiente;
+	private static JButton btnUltimo;
 
 	/**
 	 * Create the panel.
@@ -22,38 +39,52 @@ public class PnlVistas extends JPanel {
 	public PnlVistas() {
 		setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JPanel contentPane = new JPanel();
+		initComponents();
+		
+		//Inicializamos la lista, mostramos el primero y comprobamos como deben estar los botones
+		ge.InicializarLista();
+		GestionEmpleados.mostrarPrimero(txtNombre, txtFechaNacimiento, txtSalario);
+		ge.comprobarBotones(GestionEmpleados.pos, btnGuardar, btnCancelar, btnSiguiente, btnAnterior);
+				
+		//Añadimos las acciones de los eventos
+		addListeners();
+
+	}
+
+	private void initComponents() {
+		
+		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		add(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel pnlMostrar = new JPanel();
+		pnlMostrar = new JPanel();
 		contentPane.add(pnlMostrar, BorderLayout.CENTER);
 		pnlMostrar.setLayout(new GridLayout(4, 2, 0, 0));
 		
 		JLabel lblNombre = new JLabel("Nombre");
 		pnlMostrar.add(lblNombre);
 		
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setColumns(10);
-		pnlMostrar.add(textField);
+		txtNombre = new JTextField();
+		txtNombre.setEditable(false);
+		txtNombre.setColumns(10);
+		pnlMostrar.add(txtNombre);
 		
 		JLabel lblFechaNacimiento = new JLabel("Fecha Nacimiento");
 		pnlMostrar.add(lblFechaNacimiento);
 		
-		textField_1 = new JTextField();
-		textField_1.setEditable(false);
-		textField_1.setColumns(10);
-		pnlMostrar.add(textField_1);
+		txtFechaNacimiento = new JTextField();
+		txtFechaNacimiento.setEditable(false);
+		txtFechaNacimiento.setColumns(10);
+		pnlMostrar.add(txtFechaNacimiento);
 		
 		JLabel lblSalario = new JLabel("Salario");
 		pnlMostrar.add(lblSalario);
 		
-		textField_2 = new JTextField();
-		textField_2.setEditable(false);
-		textField_2.setColumns(10);
-		pnlMostrar.add(textField_2);
+		txtSalario = new JTextField();
+		txtSalario.setEditable(false);
+		txtSalario.setColumns(10);
+		pnlMostrar.add(txtSalario);
 		
 		JLabel lblOficio = new JLabel("Oficio");
 		pnlMostrar.add(lblOficio);
@@ -67,20 +98,20 @@ public class PnlVistas extends JPanel {
 		contentPane.add(pnlBotones, BorderLayout.SOUTH);
 		pnlBotones.setLayout(new GridLayout(0, 4, 0, 0));
 		
-		JButton btnPrimero = new JButton("Primero");
+		btnPrimero = new JButton("Primero");
 		btnPrimero.setEnabled(false);
 		pnlBotones.add(btnPrimero);
 		
-		JButton btnAnterior = new JButton("Anterior");
+		btnAnterior = new JButton("Anterior");
 		pnlBotones.add(btnAnterior);
 		
-		JButton btnSiguiente = new JButton("Siguiente");
+		btnSiguiente = new JButton("Siguiente");
 		pnlBotones.add(btnSiguiente);
 		
-		JButton btnUltimo = new JButton("Ultimo");
+		btnUltimo = new JButton("Ultimo");
 		btnUltimo.setEnabled(false);
 		pnlBotones.add(btnUltimo);
-
+		
 	}
 
 }
