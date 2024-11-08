@@ -36,10 +36,15 @@ public class PnlAltas extends JPanel {
 
 		setLayout(new GridLayout(6, 2, 5, 5));
 
+		//Inicializamos los componentes
 		initComponents();
+		
+		//Añadimos los eventos
 		addListeners();
 	}
 	private void addListeners() {
+		
+		//Añadimos funcionalidad al boton Guardar
 		btnGuardar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -47,6 +52,7 @@ public class PnlAltas extends JPanel {
 			}
 		});
 
+		//Añadimos funcionalidad al boton Borrar
 		btnBorrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

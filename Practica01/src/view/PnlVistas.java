@@ -43,7 +43,8 @@ public class PnlVistas extends JPanel {
 		
 		initComponents();
 		
-		//Inicializamos la lista, mostramos el primero y comprobamos como deben estar los botones
+		//Mostramos el primero y comprobamos como deben estar los botones
+		ge.InicializarLista();
 		ge.mostrarPrimero(txtNombre, txtFechaNacimiento, txtSalario, txtOficio);
 		ge.comprobarBotonesVista(GestionEmpleados.pos, btnPrimero, btnAnterior, btnSiguiente, btnUltimo);
 				
@@ -93,6 +94,7 @@ public class PnlVistas extends JPanel {
 	}
 
 	private void initComponents() {
+		//Inicializamos los componentes
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

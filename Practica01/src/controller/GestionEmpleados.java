@@ -58,6 +58,7 @@ public class GestionEmpleados {
 
 	}
 
+	// Comprobamos los botones de la vista
 	public void comprobarBotonesVista(int pos, JButton btnPrimero, JButton btnAnterior, JButton btnSiguiente,
 			JButton btnUltimo) {
 
@@ -134,26 +135,33 @@ public class GestionEmpleados {
 			try {
 				// Hacemos el parseo a LocalDate pasandole el JTextField y el DateFormatter
 				LocalDate localDate = LocalDate.parse(txtFechaNacimiento.getText(), dateFormatter);
-				// Pruebas
+				// Comprobamos la fecha
 				if (localDate.getYear() >= 1900 && localDate.getYear() <= 2015) {
 					txtFechaNacimiento.setForeground(Color.black);
+					// Si el salario es un double
 					if (esDouble(txtSalario.getText())) {
 						Double salario = Double.parseDouble(txtSalario.getText());
 						Double sueldoMax = Double.parseDouble(txtSueldoMaximo.getText());
+						// Comprobamos si el salario es inferior al sueldoMax
 						if (salario < sueldoMax) {
+							// Si todo es correcto lo añadimos a la lista
 							empleados.add(new Empleado(txtNombre.getText(), localDate, salario, sueldoMax,
 									txtOficio.getText()));
-							mostrarSiguiente(txtNombre, txtFechaNacimiento, txtSalario, txtOficio);
 
+							// Si se ha dado de alta al empleado correctamente se le indica al usuario
 							JOptionPane.showMessageDialog(null, "Empleado dado de alta correctamente", "Correcto",
 									JOptionPane.INFORMATION_MESSAGE);
+							
+							
 
+							// Y se vacían los campos
 							txtNombre.setText("");
 							txtFechaNacimiento.setText("");
 							txtSalario.setText("");
 							txtSueldoMaximo.setText("");
 							txtOficio.setText("");
 						} else {
+							// Si el sueldo no es correcto se pone rojo y se le indica al usuario
 							txtSalario.setForeground(Color.red);
 							JOptionPane.showMessageDialog(null, "El salario debe ser inferior al salario maximo",
 									"Error", JOptionPane.ERROR_MESSAGE);
@@ -161,6 +169,8 @@ public class GestionEmpleados {
 					}
 				}
 			} catch (DateTimeParseException e) {
+				// Si la fecha no es correcta o no tiene el formato valido se pone el texto en
+				// rojo y se le indica al usuario
 				txtFechaNacimiento.setForeground(Color.red);
 				JOptionPane.showMessageDialog(null, "La fecha debe ser en el formato yyy-MM-dd", "Error",
 						JOptionPane.ERROR_MESSAGE);
@@ -184,6 +194,7 @@ public class GestionEmpleados {
 	}
 
 	public boolean esDouble(String valor) {
+		// Comprobamos que el valor del sueldo sea un double
 		try {
 			Double.parseDouble(valor);
 			return true;

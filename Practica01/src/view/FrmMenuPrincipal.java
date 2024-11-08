@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 import controller.GestionEmpleados;
 
 public class FrmMenuPrincipal extends JFrame {
-	
+
 	private static GestionEmpleados ge = new GestionEmpleados();
 
 	private static final long serialVersionUID = 1L;
@@ -37,31 +37,14 @@ public class FrmMenuPrincipal extends JFrame {
 	private JPanel pnlVistas;
 	private JPanel pnlAltas;
 	private JPanel pnlAcercaDe;
-	
+
 	private ImageIcon imagen;
 	private JLabel lblImagen;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					
-					ge.InicializarLista();
-					FrmMenuPrincipal frame = new FrmMenuPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
+
 	public FrmMenuPrincipal() {
+
+		// Ponemos los atributos del JFrame y del JPanel
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrmMenuPrincipal.class.getResource("/view/icon.png")));
 		setName("FrmMenuPrincipal");
 		setTitle("Gestión Empleados");
@@ -70,50 +53,74 @@ public class FrmMenuPrincipal extends JFrame {
 		setBounds(100, 100, 600, 400);
 		setLocationRelativeTo(null);
 		
+		// Inicializamos los componentes
+		initComponents();
+
+		//Creamos el contentPane por defecto
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		Image tmp = new ImageIcon("view/icon.png").getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+		imagen = new ImageIcon(tmp);
+		lblImagen = new JLabel(imagen);
+		contentPane.add(lblImagen, BorderLayout.CENTER);
+
+		
+
+		// Añadimos los eventos
+		addListeners();
+
+		setVisible(true);
+	}
+
+	private void initComponents() {
+		
+		//Barra de menu
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
+		//Menu paneles
 		mnuPaneles = new JMenu("Paneles");
 		menuBar.add(mnuPaneles);
-		
+
+		//Item menuPrincipal
 		mniMenu = new JMenuItem("Menú Principal");
 		mniMenu.setHorizontalAlignment(SwingConstants.CENTER);
 		mnuPaneles.add(mniMenu);
-		
+
+		//Item menu ver
 		mniVer = new JMenuItem("Ver");
 		mniVer.setHorizontalTextPosition(SwingConstants.CENTER);
 		mniVer.setHorizontalAlignment(SwingConstants.CENTER);
 		mnuPaneles.add(mniVer);
-		
+
+		//Item menu altas
 		mniAltas = new JMenuItem("Altas");
 		mniAltas.setHorizontalAlignment(SwingConstants.CENTER);
 		mnuPaneles.add(mniAltas);
-		
+
+		//Un separador para que quede mas bonito
 		separator = new JSeparator();
 		mnuPaneles.add(separator);
-		
+
+		//Item menu acerca de
 		mniAcercaDe = new JMenuItem("Acerca de");
 		mniAcercaDe.setHorizontalAlignment(SwingConstants.CENTER);
 		mnuPaneles.add(mniAcercaDe);
+
+		//Panel por defecto
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
+		//Instanciamos las llamadas a las clases correspondientes
 		pnlVistas = new PnlVistas();
 		pnlAltas = new PnlAltas();
 		pnlAcercaDe = new PnlAcercaDe();
-		
-		addListeners();
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		Image tmp = new ImageIcon("view/icon.png").getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-		imagen = new ImageIcon(tmp);
-		lblImagen = new JLabel(imagen); 
-		contentPane.add(lblImagen, BorderLayout.CENTER);
+
 	}
+
 	private void addListeners() {
 
-
+		// Al pulsar en el menu item de ver, ponemos el panel de vista en el JFrame
 		mniVer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -122,6 +129,8 @@ public class FrmMenuPrincipal extends JFrame {
 				repaint();
 			}
 		});
+
+		// Al pulsar en el menu item de altas, ponemos el panel de altas en el JFrame
 		mniAltas.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -130,6 +139,9 @@ public class FrmMenuPrincipal extends JFrame {
 				repaint();
 			}
 		});
+
+		// Al pulsar en el menu item de acerca de, ponemos el panel de acerca de en el
+		// JFrame
 		mniAcercaDe.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -138,6 +150,9 @@ public class FrmMenuPrincipal extends JFrame {
 				repaint();
 			}
 		});
+
+		// Al pulsar en el menu item de menu principal, ponemos el contentpane en el
+		// JFrame
 		mniMenu.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -18,6 +18,8 @@ public class PnlAcercaDe extends JPanel {
 	 * Create the panel.
 	 */
 	public PnlAcercaDe() {
+		
+		//Describimos los atributos y componentes del panel
 		setLayout(new GridLayout(2, 1, 0, 10));
 
 		JLabel lblAcercaDe = new JLabel("Trabajo realizado por Manuel Borrero Guerrero y Antonio Guerrero Pulgada");
