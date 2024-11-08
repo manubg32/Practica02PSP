@@ -22,6 +22,9 @@ public class PnlAltas extends JPanel {
 	 * Create the panel.
 	 */
 	public PnlAltas() {
+		
+		
+		initComponents();
 		setLayout(new GridLayout(6, 2, 5, 5));
 		
 		JLabel lblNombre = new JLabel("Nombre: ");

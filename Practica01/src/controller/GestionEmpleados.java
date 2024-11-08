@@ -33,7 +33,7 @@ public class GestionEmpleados {
 		
 	}
 
-	public void mostrarSiguiente(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario) {
+	public void mostrarSiguiente(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario, JTextField txtOficio) {
 		//Mientras que la posicion sea inferior al tamaño de la lista, la incrementamos
 		if (pos < empleados.size()) {
 		        pos++;
@@ -43,55 +43,48 @@ public class GestionEmpleados {
 		 if (pos < empleados.size()) {
 			 Empleado siguiente = empleados.get(pos);
 			    txtNombre.setText(siguiente.getNombre());
-			    txtFechaNacimiento.setText(siguiente.getFechaNacimiento());
+			    txtFechaNacimiento.setText(siguiente.getFechaNacimiento().toString());
 			    txtSalario.setText(siguiente.getSalario().toString());
-		 }
-		    
-		 //Si la posicion es igual al tamaño de la lista ponemos los campos de texto editables y vacios
-		 if (pos == empleados.size()) {
-			 txtNombre.setText("");
-			 txtNombre.setEditable(true);
-			 txtFechaNacimiento.setText("");
-			 txtFechaNacimiento.setEditable(true);
-			 txtSalario.setText("");
-			 txtSalario.setEditable(true);
+			    txtOficio.setText(siguiente.getOficio());
 		 }
 		    
 		
 		
 	}
 
-	public void comprobarBotones(int pos, JButton btnGuardar, JButton btnCancelar, JButton btnSiguiente, JButton btnAnterior) {
+	public void comprobarBotonesVista(int pos, JButton btnPrimero, JButton btnAnterior, JButton btnSiguiente, JButton btnUltimo) {
 		
-		//Si la posicion es mayor o igual al tamaño de la lista, el boton de guardar y cancelar se activan y el de siguiente se desactiva
-		if (pos >= empleados.size()) {
-			btnGuardar.setEnabled(true);
-			btnCancelar.setEnabled(true);
+		//Si la posicion es mayor o igual al tamaño de la lista, el boton de siguiente y ultimo se desactivan
+		if (pos >= empleados.size()-1) {
 			btnSiguiente.setEnabled(false);
+			btnUltimo.setEnabled(false);
 		} else {
-		//Si no el boton de guardar y cancelar se desactivan y el de siguiente se activa
-			btnGuardar.setEnabled(false);
-			btnCancelar.setEnabled(false);
+		//Si no el boton de siguiente y ultimo se activan
 			btnSiguiente.setEnabled(true);
+			btnUltimo.setEnabled(true);
 		}
 		
-		//Si la posicion es menor o igual a cero, el boton anterior se desactiva, si no, se activa
+		//Si la posicion es menor o igual a cero, el boton anterior y primero se desactivan, si no, se activan
 		if (pos <= 0) {
 			btnAnterior.setEnabled(false);
+			btnPrimero.setEnabled(false);
 		} else {
 			btnAnterior.setEnabled(true);
+			btnPrimero.setEnabled(true);
 		}
 		
 	}
 
-	public static void mostrarPrimero(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario) {
-		//Este metodo se llama al crear la interfaz por lo que la variable pos es 0 por lo tanto mostramos dicho elemento
+	public void mostrarPrimero(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario, JTextField txtOficio) {
+		//Este metodo se llama al crear la interfaz por lo que la variable pos se pone a 0, mostramos dicho elemento
+		pos = 0;
 		txtNombre.setText(empleados.get(pos).getNombre());
-		txtFechaNacimiento.setText(empleados.get(pos).getFechaNacimiento());
+		txtFechaNacimiento.setText(empleados.get(pos).getFechaNacimiento().toString());
 		txtSalario.setText(empleados.get(pos).getSalario().toString());
+		txtOficio.setText(empleados.get(pos).getOficio());
 	}
 
-	public void mostrarAnterior(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario) {
+	public void mostrarAnterior(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario, JTextField txtOficio) {
 		//si la posicio es mayor que 0 decrementamos la posicion y mostramos el elemento correspondiente
 		if (pos > 0) {
 	        pos--;
@@ -99,9 +92,20 @@ public class GestionEmpleados {
 
 	    Empleado anterior = empleados.get(pos);
 	    txtNombre.setText(anterior.getNombre());
-	    txtFechaNacimiento.setText(anterior.getFechaNacimiento());
+	    txtFechaNacimiento.setText(anterior.getFechaNacimiento().toString());
 	    txtSalario.setText(anterior.getSalario().toString());
+	    txtOficio.setText(anterior.getOficio());
 		
+	}
+
+
+	public void mostrarUltimo(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario, JTextField txtOficio) {
+		//ponemos la posicion en el ultimo elemento de la lista
+		pos = empleados.size()-1;
+		txtNombre.setText(empleados.get(pos).getNombre());
+		txtFechaNacimiento.setText(empleados.get(pos).getFechaNacimiento().toString());
+		txtSalario.setText(empleados.get(pos).getSalario().toString());
+		txtOficio.setText(empleados.get(pos).getOficio());
 	}
 
 	public void guardar(JTextField txtNombre, JTextField txtFechaNacimiento, JTextField txtSalario) {
@@ -121,7 +125,5 @@ public class GestionEmpleados {
 		txtSalario.setText("");
 		
 	}
-
-	
 	
 }

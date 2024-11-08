@@ -1,15 +1,17 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.GestionEmpleados;
-
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 
 public class PnlVistas extends JPanel {
 	
@@ -43,12 +45,52 @@ public class PnlVistas extends JPanel {
 		
 		//Inicializamos la lista, mostramos el primero y comprobamos como deben estar los botones
 		ge.InicializarLista();
-		GestionEmpleados.mostrarPrimero(txtNombre, txtFechaNacimiento, txtSalario);
-		ge.comprobarBotones(GestionEmpleados.pos, btnGuardar, btnCancelar, btnSiguiente, btnAnterior);
+		ge.mostrarPrimero(txtNombre, txtFechaNacimiento, txtSalario, txtOficio);
+		ge.comprobarBotonesVista(GestionEmpleados.pos, btnPrimero, btnAnterior, btnSiguiente, btnUltimo);
 				
 		//Añadimos las acciones de los eventos
 		addListeners();
 
+	}
+
+	private void addListeners() {
+		
+		//Añadimos funcionalidad al boton Primero
+		btnPrimero.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ge.mostrarPrimero(txtNombre, txtFechaNacimiento, txtSalario, txtOficio);
+				ge.comprobarBotonesVista(GestionEmpleados.pos, btnPrimero, btnAnterior, btnSiguiente, btnUltimo);
+			}	
+		});
+		
+		//Añadimos funcionalidad al boton Anterior
+		btnAnterior.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ge.mostrarAnterior(txtNombre, txtFechaNacimiento, txtSalario, txtOficio);
+				ge.comprobarBotonesVista(GestionEmpleados.pos, btnPrimero, btnAnterior, btnSiguiente, btnUltimo);
+			}
+		});
+		
+		//Añadimos funcionalidad al boton Siguiente
+		btnSiguiente.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ge.mostrarSiguiente(txtNombre, txtFechaNacimiento, txtSalario, txtOficio);
+				ge.comprobarBotonesVista(GestionEmpleados.pos, btnPrimero, btnAnterior, btnSiguiente, btnUltimo);
+			}
+		});
+		
+		//Añadimos funcionalidad al boton Ultimo
+		btnUltimo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ge.mostrarUltimo(txtNombre, txtFechaNacimiento, txtSalario, txtOficio);
+				ge.comprobarBotonesVista(GestionEmpleados.pos, btnPrimero, btnAnterior, btnSiguiente, btnUltimo);
+			}
+		});
+		
 	}
 
 	private void initComponents() {
