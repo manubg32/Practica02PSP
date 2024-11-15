@@ -30,10 +30,10 @@ public class PnlVistas extends JPanel {
 	private JTextField txtOficio;
 	
 	
-	private static JButton btnPrimero;
-	private static JButton btnAnterior;
-	private static JButton btnSiguiente;
-	private static JButton btnUltimo;
+	public static JButton btnPrimero;
+	public static JButton btnAnterior;
+	public static JButton btnSiguiente;
+	public static JButton btnUltimo;
 
 	/**
 	 * Create the panel.

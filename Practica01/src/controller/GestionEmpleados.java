@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import model.Empleado;
+import view.PnlVistas;
 
 public class GestionEmpleados {
 
@@ -152,7 +153,8 @@ public class GestionEmpleados {
 							JOptionPane.showMessageDialog(null, "Empleado dado de alta correctamente", "Correcto",
 									JOptionPane.INFORMATION_MESSAGE);
 							
-							
+							//Comprobamos los botones de la vista
+							comprobarBotonesVista(pos, PnlVistas.btnPrimero, PnlVistas.btnAnterior,  PnlVistas.btnSiguiente, PnlVistas.btnUltimo);
 
 							// Y se vacían los campos
 							txtNombre.setText("");
